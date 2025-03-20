@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'debug_toolbar',
     'django_extensions',
+    'storefront',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'tailwind'
