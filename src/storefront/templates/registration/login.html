@@ -1,0 +1,26 @@
+{% extends "storefront/base.html" %}
+
+{% load tailwind_filters %}
+
+{% block head_content %}
+<title>Login</title>
+{% endblock head_content %}
+
+{% block content %}
+<main class="bg-gray-50 min-h-[calc(100vh-160px)] flex justify-center items-center">
+  <div class="max-md:w-[80%] max-lg:w-[60%]  lg:w-[40%] pt-16 pb-8 px-8 bg-white shadow-2xl rounded-xl">
+    <h1 class="text-center text-3xl mb-8">ElyScents</h1>
+    <h2 class="text-2xl mb-8 font-semibold">Login</h2>
+    <form autocomplete="off" action="" method="post">
+      {% csrf_token %}
+      {{form|crispy}}
+      <button class="w-full bg-black text-white py-3 mt-3 rounded-lg font-bold text-base tracking-wide">Sign In</button>
+    </form>
+    <div class="mt-8 text-lg">
+      Don't have an account yet? <a class="font-semibold border-b-2 border-b-gray-300 link-decoration"
+        href="{% url 'register' %}">Regsiter here</a>
+    </div>
+  </div>
+</main>
+
+{% endblock content %}

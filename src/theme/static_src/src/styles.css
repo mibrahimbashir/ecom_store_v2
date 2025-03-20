@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer components {
+    .link-decoration {
+        @apply relative w-fit cursor-pointer after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 after:ease-in-out hover:after:w-full
+    }
+
+    form label {
+        @apply mt-8
+    }
+
+    /* targets error messages */
+    form p {
+        @apply text-red-600 font-medium
+    }
+}

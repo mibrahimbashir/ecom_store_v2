@@ -8,4 +8,25 @@
 <div class="text-4xl text-center">
   Welcome to the Ecommerce Store
 </div>
+
+{% if request.user.is_authenticated %}
+<p class="text-center text-3xl my-8">You are logged in to your account</p>
+{% else %}
+<p class="text-center text-3xl my-8">Login to your account.</p>
+{% endif %}
+
+<div class="my-8 flex justify-center gap-8 text-2xl">
+  <div>
+    <a href="{% url 'login' %}">Login</a>
+  </div>
+  <div>
+    <a href="{% url 'register' %}">Register</a>
+  </div>
+  <div>
+    <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <button type="submit">Logout</button>
+    </form>
+  </div>
+</div>
 {% endblock content %}
