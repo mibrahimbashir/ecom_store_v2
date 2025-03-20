@@ -27,7 +27,16 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'django_browser_reload',
+    'crispy_forms',
+    'crispy_tailwind',
+    'phonenumber_field',
+    'debug_toolbar',
+    'django_extensions',
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'tailwind'
+
+CRISPY_TEMPLATE_PACK = 'tailwind'
 
 TAILWIND_APP_NAME = 'theme'
 
@@ -44,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'ecom_store.urls'
