@@ -1,32 +1,117 @@
 {% extends 'storefront/base.html' %}
 
+{% load static humanize %}
+
 {% block head_content %}
 <title>Ecommerce Store</title>
 {% endblock head_content %}
 
 {% block content %}
-<div class="text-4xl text-center">
-  Welcome to the Ecommerce Store
-</div>
+<main>
+  <!-- Hero section -->
+  <section>
+    <div>
+      <img class="hidden md:block w-full" src="{% static 'img/hero-section-img.jpg' %}" alt="">
+      <img class="block md:hidden w-full" src="{% static 'img/hero-section-img-2.jpg' %}" alt="">
+    </div>
+  </section>
 
-{% if request.user.is_authenticated %}
-<p class="text-center text-3xl my-8">You are logged in to your account</p>
-{% else %}
-<p class="text-center text-3xl my-8">Login to your account.</p>
-{% endif %}
+  <!-- Section for displaying collections -->
+  <section>
+    <div class="flex flex-col justify-center items-center m-12 mx-8 gap-12">
+      <h1 class="uppercase text-xl md:text-2xl lg:text-3xl text-center">
+        Our Product Collections
+      </h1>
+      <!-- Collections grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {% for collection in all_collections %}
+        <!-- Collection of products -->
+        <div class="relative flex flex-col items-center justify-center">
+          <!-- Collection name -->
+          <div
+            class="text-sm sm:text-base lg:text-lg text-center text-wrap absolute top-1/2 bg-white py-2 px-4 m-4 mt-0">
+            {{ collection.name }}
+          </div>
+          <div>
+            <img src="{{ collection.image.url }}" alt="">
+          </div>
+        </div>
+        {% endfor %}
 
-<div class="my-8 flex justify-center gap-8 text-2xl">
-  <div>
-    <a href="{% url 'login' %}">Login</a>
-  </div>
-  <div>
-    <a href="{% url 'register' %}">Register</a>
-  </div>
-  <div>
-    <form action="{% url 'logout' %}" method="post">
-      {% csrf_token %}
-      <button type="submit">Logout</button>
-    </form>
-  </div>
-</div>
+        <!-- View all collections column -->
+        <div class="relative flex flex-col items-center justify-center">
+          <div class="text-sm sm:text-base lg:text-lg text-center text-wrap absolute top-1/2 bg-white py-2 px-4">
+            View All
+          </div>
+          <div>
+            <img src="{% static 'img/collections_view_all.jpg' %}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Display all products in each collection -->
+  {% for collection in all_collections %}
+  <section>
+    <div class="flex flex-col justify-center items-center m-12 mx-8 gap-12">
+      <h2 class="uppercase text-xl md:text-2xl lg:text-3xl text-center">
+        {{ collection.name }}
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-12 ">
+        {% for product in collection.products.all %}
+        <!-- Product Card -->
+        <a href="#">
+          <div class="flex flex-col justify-center items-center text-center">
+            <!-- Product Image and Sale Tag (if applicable) -->
+            <div class="relative mb-4 sm:mb-6 md:mb-8">
+              {% for product_image in product.images.all %}
+              {% if forloop.first %}
+              <img loading="lazy" class="object-cover w-full h-full" src="{{ product_image.image.url }}" alt="">
+              {% endif %}
+              {% endfor %}
+
+              {% if product.on_sale %}
+              <div
+                class="bg-black text-white font-semibold absolute top-0 right-1 py-1 px-2 text-xs sm:text-sm sm:px-4 lg:text-base">
+                Sale
+              </div>
+              {% endif %}
+            </div>
+
+            <!-- Product Name -->
+            <div class="text-sm sm:text-base md:text-lg 2xl:text-xl">
+              {{ product.name }}
+            </div>
+
+            {% if product.on_sale %}
+            <!-- Discounted Product section; Display original and discounted price along with total savings -->
+            <div class="flex flex-col lg:flex-row items-center justify-center mt-2 text-xs sm:text-sm md:text-base">
+              <span class="line-through mr-2">
+                Rs. {{ product.price|floatformat:2|intcomma }}
+              </span>
+              <span class="mr-2">
+                Rs. {{ product.discounted_price|floatformat:2|intcomma }}
+              </span>
+              <span class=" text-red-600">
+                Save Rs. {{ product.total_savings|floatformat:2|intcomma }}
+              </span>
+            </div>
+            {% else %}
+            <!-- Product not on sale; Simply display price -->
+            <div class="mt-2 text-xs sm:text-sm md:text-base">
+              <span>Rs. {{ product.price|floatformat:2|intcomma }}</span>
+            </div>
+            {% endif %}
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section>
+  {% endfor %}
+
+</main>
+
 {% endblock content %}

@@ -1,10 +1,34 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
+from django.db.models import Prefetch
 from .forms import CustomerForm
+from products.models import Product, ProductImage, Collection
 
 
 def home(request):
-    context = {}
+    product_images_prefetch = Prefetch(
+        'images', # related_name of ProductImage in Product
+        queryset=ProductImage.objects.only(
+            'product',
+            'image',
+            'primary_image'
+        ).filter(primary_image=True)
+    )
+
+    # Prefetch products with their images for each collection
+    all_collections = Collection.objects.only('name', 'image') \
+        .prefetch_related(
+            Prefetch(
+                'products',
+                queryset=Product.objects.only(
+                    'name',
+                    'price',
+                    'discount_percentage'
+                ).prefetch_related(product_images_prefetch)
+            )
+        ).filter(display_on_home=True)
+
+    context = {'all_collections': all_collections}
 
     return render(request, 'storefront/home.html', context)
 
