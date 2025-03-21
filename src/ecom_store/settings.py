@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'storefront',
     'products',
+    'django_cleanup.apps.CleanupConfig', # recommended to place it last
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'tailwind'
