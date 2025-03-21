@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_extensions',
     'storefront',
+    'products',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'tailwind'
