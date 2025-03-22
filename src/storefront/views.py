@@ -49,6 +49,45 @@ def get_header_content(request):
     return render(request, 'storefront/header.html', context)
 
 
+@require_http_methods(['GET'])
+def search_modal(request):
+    # not an AJAX request
+    if not request.headers.get('HX-Request'):
+        return HttpResponseForbidden()
+
+    return render(request, 'storefront/search_modal.html')
+
+
+@require_http_methods(['POST'])
+def search_results(request):
+    # not an AJAX request
+    if not request.headers.get('HX-Request'):
+        return HttpResponseForbidden()
+
+    # get value of input element;
+    searched_keyword = request.POST.get('search', '')
+
+    if not searched_keyword:
+        return render(request, 'storefront/search_results.html')
+
+    product_images_prefetch = Prefetch(
+        'images', # related_name of ProductImage in Product
+        queryset=ProductImage.objects.only(
+            'product',
+            'image',
+            'primary_image'
+        ).filter(primary_image=True)
+    )
+
+    products = Product.objects.only('name', 'price') \
+        .prefetch_related(product_images_prefetch) \
+            .filter(name__icontains=searched_keyword, mark_as_deleted=False)
+
+    context = {'products': products}
+
+    return render(request, 'storefront/search_results.html', context)
+
+
 @require_http_methods(['GET', 'POST'])
 def register(request):
     if request.user.is_authenticated:

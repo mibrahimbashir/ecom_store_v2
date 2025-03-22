@@ -1,0 +1,18 @@
+{% load static %}
+<div id="search-modal" class="fixed top-0 bottom-0 left-0 right-0 bg-gradient-to-r from-green-400 to-blue-500 z-[6000]">
+  <div class="flex justify-center">
+    <div class="flex items-start w-[80%] my-12">
+      <!-- Input element & Search results -->
+      <div class="relative w-full">
+        <input hx-post="{% url 'search-results' %}" hx-trigger="keyup changed delay:1s" hx-target="#search-results"
+          name="search" type="search" placeholder="Search Products"
+          class="w-full rounded-lg text-sm sm:text-base lg:text-lg xl:text-xl 2xl:text-2xl px-4 xl:py-4">
+        <div id="search-results" class="max-h-[calc(100vh-200px)] overflow-y-auto"></div>
+      </div>
+      <!-- Close button -->
+      <div class="ml-3 mt-2 cursor-pointer" hx-on:click="this.closest('#search-modal').remove()">
+        <img class="max-w-5 md:max-w-6 xl:max-w-7" src="{% static 'icons/close.png' %}" alt="">
+      </div>
+    </div>
+  </div>
+</div>

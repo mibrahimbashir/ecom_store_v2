@@ -21,6 +21,8 @@
   <header hx-trigger="load once" hx-swap="innerHTML" hx-get="{% url 'get-header-content' %}">
   </header>
 
+  <search id="search"></search>
+
   {% block content %}
   {% endblock content %}
 </body>

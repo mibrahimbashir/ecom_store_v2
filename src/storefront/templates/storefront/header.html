@@ -13,13 +13,7 @@
   <div role="navigation" class="hidden md:block py-4">
     <div class="flex items-center w-[90%] mx-auto text-base xl:text-lg tracking-widest">
       <!-- Search Icon -->
-      {% comment %}
-      <div hx-trigger="click" hx-target="#search" hx-get="{% url 'search-modal' %}"
-        class="max-sm:w-[30px] max-md:w-[50px] max-lg:w-[70px] max-xl:w-[100px] lg:w-[130px] cursor-pointer">
-        <img class="max-md:w-6 max-lg:w-7 w-8 max-w-none" src="{% static 'icons/search.png' %}" alt="">
-      </div>
-      {% endcomment %}
-      <div>
+      <div hx-trigger="click" hx-target="#search" hx-get="{% url 'search-modal' %}">
         <img class="w-7 lg:w-8 2xl:w-9 cursor-pointer" src="{% static 'icons/search.png' %}" alt="">
       </div>
 
@@ -101,12 +95,7 @@
       </div>
       <!-- search and shopping cart icons -->
       <div class="flex gap-4">
-        {% comment %}
-        <div class="cursor-pointer" hx-get="{% url 'search-modal' %}" hx-trigger="click" hx-target="#search-modal">
-          <img width="25px" src="https://img.icons8.com/?size=256&id=132&format=png" alt="search." />
-        </div>
-        {% endcomment %}
-        <div class="cursor-pointer">
+        <div class="cursor-pointer" hx-trigger="click" hx-target="#search" hx-get="{% url 'search-modal' %}">
           <img class="w-[25px] sm:w-[30px]" src="{% static 'icons/search.png' %}" alt="search." />
         </div>
         <div class="cursor-pointer relative">

@@ -1,0 +1,55 @@
+<div class="bg-white py-8 px-2 sm:px-4 mt-[1px] rounded-lg">
+  {% if products %}
+  <!-- Search results here -->
+  <ul>
+    {% for product in products %}
+    <li class="mb-8">
+      <!-- Parent container containing all info related to product -->
+      <a class="px-2 sm:px-6 py-4 hover:bg-gray-200 block">
+        <div class="flex gap-2">
+          <!-- Image row -->
+          {% for product_image in product.images.all %}
+          {% if forloop.first %}
+          <div class="h-full">
+            <img class="rounded-md max-w-[90px] md:max-w-[150px] xl:max-w-[200px] 2xl:max-w-[35 0px]"
+              src="{{product_image.image.url}}" alt="">
+          </div>
+          {% endif %}
+          {% endfor %}
+          <!-- Product info row -->
+          <div class="flex flex-col ">
+            <div class="mb-2 text-sm sm:text-base lg:text-xl xl:text-2xl 2xl:text-4xl">
+              {{product.name}}
+            </div>
+            <!-- Stock availability -->
+            <div class="mb-2 text-sm sm:text-base lg:text-xl xl:text-2xl 2xl:text-4xl">
+              {% if product.is_available %}
+              In Stock
+              {% else %}
+              Out of Stock
+              {% endif %}
+            </div>
+            <!-- Product Price -->
+            <div class="flex gap-2 text-xs sm:text-sm lg:text-lg xl:text-xl 2xl:text-3xl">
+              {% if product.on_sale %}
+              <span class="line-through">Rs. {{product.price}}</span>
+              <span class="">Rs. {{product.discounted_price}}</span>
+              <span class="text-red-800">Save Rs. {{product.total_savings}}</span>
+              {% else %}
+              <span>Rs. {{product.price}}</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% else %}
+  <ul>
+    <li>No products found.</li>
+  </ul>
+
+  {% endif %}
+</div>
