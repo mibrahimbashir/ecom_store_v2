@@ -13,7 +13,7 @@
   <div role="navigation" class="hidden md:block py-4">
     <div class="flex items-center w-[90%] mx-auto text-base xl:text-lg tracking-widest">
       <!-- Search Icon -->
-      <div hx-trigger="click" hx-target="#search" hx-get="{% url 'search-modal' %}">
+      <div hx-trigger="click" hx-target="#search" hx-get="{% url 'search-modal' %}" hx-swap="innerHTML transition:true">
         <img class="w-7 lg:w-8 2xl:w-9 cursor-pointer" src="{% static 'icons/search.png' %}" alt="">
       </div>
 
@@ -86,7 +86,8 @@
   <!-- smaller screens -->
   <div class="block md:hidden pt-2">
     <div class="flex items-center w-[90%] gap-4 mx-auto">
-      <div class="cursor-pointer">
+      <div class="cursor-pointer" hx-trigger="click" hx-swap="innerHTML transition:true" hx-target="#menu"
+        hx-get="{% url 'menu-content' %}">
         <img width="25px" src="{% static 'icons/menu.png' %}" alt="menu button.">
       </div>
       <!-- site logo -->
@@ -95,7 +96,8 @@
       </div>
       <!-- search and shopping cart icons -->
       <div class="flex gap-4">
-        <div class="cursor-pointer" hx-trigger="click" hx-target="#search" hx-get="{% url 'search-modal' %}">
+        <div class="cursor-pointer" hx-trigger="click" hx-target="#search" hx-get="{% url 'search-modal' %}"
+          hx-swap="innerHTML transition:true">
           <img class="w-[25px] sm:w-[30px]" src="{% static 'icons/search.png' %}" alt="search." />
         </div>
         <div class="cursor-pointer relative">

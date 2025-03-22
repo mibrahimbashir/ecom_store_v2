@@ -1,0 +1,48 @@
+{% load static %}
+<div class="md:hidden block" id="menu-container">
+
+  <!-- overlay -->
+  <div hx-on:click="this.closest('#menu-container').remove()"
+    class="fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.4)] z-[6000]">
+  </div>
+
+  <!-- menu content -->
+  <div class="fixed top-0 left-0 bottom-0 w-[70%] min-[430px]:max-w-[50%] px-8 z-[6000] bg-white uppercase">
+    <div class="flex justify-end my-8">
+      <img hx-on:click="this.closest('#menu-container').remove()" class="cursor-pointer w-4"
+        src="{% static 'icons/close.png' %}" alt="close menu">
+    </div>
+    <ul class="tracking-widest">
+      <li class="border-t-[1px] py-4">Home</li>
+      <li class="border-t-[1px] py-4">
+        <div class="flex flex-col">
+          <div class="flex justify-between items-center">
+            <p>All Collections</p>
+            <label for="menu-collections" class="active:bg-gray-200 cursor-pointer">
+              <img id="down-arrow" class="max-w-9 min-w-9 transition-all duration-700"
+                src="{% static 'icons/down-arrow.png' %}" alt="">
+            </label>
+          </div>
+          <input type="checkbox" id="menu-collections" class="peer hidden">
+          <div
+            class="max-h-0 overflow-hidden transition-[max-height] duration-1000 ease-in-out peer-checked:max-h-screen">
+            <div class="bg-white w-full normal-case tracking-normal text-base">
+              <ul class="mt-4">
+                {% for collection in all_collections %}
+                <li class="pb-4">{{ collection.name }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="border-t-[1px] py-4">Contact Us</li>
+      <li class="border-t-[1px] py-4">About Us</li>
+    </ul>
+  </div>
+  <script>
+    document.getElementById('down-arrow').addEventListener('click', () => {
+      document.getElementById('down-arrow').classList.toggle('rotate-180')
+    })
+  </script>
+</div>

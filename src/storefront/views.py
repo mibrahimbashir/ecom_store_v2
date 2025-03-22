@@ -88,6 +88,17 @@ def search_results(request):
     return render(request, 'storefront/search_results.html', context)
 
 
+def menu_content(request):
+    # not an AJAX request
+    if not request.headers.get('HX-Request'):
+        return HttpResponseForbidden()
+
+    all_collections = Collection.objects.only('name')
+
+    context = {'all_collections': all_collections}
+    
+    return render(request, 'storefront/hamburger_menu.html', context)
+
 @require_http_methods(['GET', 'POST'])
 def register(request):
     if request.user.is_authenticated:
