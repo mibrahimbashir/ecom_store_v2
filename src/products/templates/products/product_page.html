@@ -1,0 +1,155 @@
+{% extends "storefront/base.html" %}
+
+{% load static humanize %}
+
+{% block head_content %}
+<title>
+  {{ product.name }}
+</title>
+{% endblock head_content %}
+
+
+{% block content %}
+<main class="mt-20 mb-[100px]">
+  <div class="grid max-md:grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-4 mx-8">
+    <!-- Product image -->
+    {% for product_image in product.images.all %}
+    {% if forloop.first %}
+    <div class="sticky">
+      <img src="{{product_image.image.url }}" alt="">
+    </div>
+    {% endif %}
+    {% endfor %}
+    <!-- Product details and options -->
+    <div class="max-md:flex max-md:flex-col max-md:justify-center max-md:items-center">
+      <!-- Product name -->
+      <h1 class="max-md:text-center max-md:text-3xl text-4xl tracking-wider max-w-[80%] mb-4">
+        {{ product.name }}
+      </h1>
+      <!-- Product reviews and pricing -->
+      <div
+        class="max-md:flex max-md:justify-center max-md:flex-col max-md:items-center pb-6 mb-6 border-b border-b-gray-300">
+        <!-- reviews -->
+        <div class="flex items-center -mb-7">
+          <div class="max-w-[90px] mr-2">
+            <img class="h-auto" src="https://cdn-icons-png.flaticon.com/512/992/992000.png" alt="">
+          </div>
+          <div class="text-base">{15} reviews</div>
+        </div>
+        <!-- pricing -->
+        <div class="mb-1">
+          {% if product.on_sale %}
+          <span class="max-md:text-sm line-through mr-4 text-lg">Rs.{{ product.price|intcomma }}</span>
+          <span class="max-md:text-sm mr-4 text-lg">Rs.{{ product.discounted_price|intcomma }}</span>
+          <span class="max-md:text-sm text-red-500 text-lg">Save Rs.{{ product.total_savings|intcomma }}</span>
+          {% else %}
+          <span>Rs. {{ product.price|intcomma }}</span>
+          {% endif %}
+        </div>
+        <!-- shipping -->
+        <div class="max-md:text-sm">
+          <a class="link-decoration border-b-gray-300 border-b-2" href="#">Shipping</a>
+          calculated at checkout.
+        </div>
+      </div>
+      <!-- Additional info -->
+      <div class="max-md:flex max-md:justify-center max-md:flex-col max-md:items-center mb-8 flex flex-col gap-2">
+        <div class="max-md:text-sm flex text-base tracking-wider">
+          <img class="max-md:max-w-[18px] max-md:h-[18px] mr-2 max-w-[20px] h-[20px] object-fill"
+            src="https://cdn-icons-png.flaticon.com/512/658/658015.png" alt="">
+          <p>FREE gift packing with every order</p>
+        </div>
+        <div class="max-md:text-sm flex text-base tracking-wider">
+          <img class="max-md:max-w-[18px] max-md:h-[18px] mr-2 max-w-[20px] h-[20px] object-fill"
+            src="https://cdn-icons-png.flaticon.com/512/900/900782.png" alt="">
+          <p>14 Days easy return</p>
+        </div>
+        <div class="max-md:text-sm flex text-base tracking-wider">
+          {% if product.is_available %}
+          <img class="max-md:max-w-[18px] max-md:h-[18px] mr-2 max-w-[20px] h-[20px] object-fill"
+            src="https://cdn-icons-png.flaticon.com/512/4457/4457008.png" alt="">
+          <p>In stock, ready to ship</p>
+          {% else %}
+          <img class="max-md:max-w-[18px] max-md:h-[18px] mr-2 max-w-[20px] h-[20px] object-fill"
+            src="https://cdn-icons-png.flaticon.com/512/6188/6188726.png" alt="">
+          <p>Out of Stock</p>
+          {% endif %}
+        </div>
+      </div>
+      <!-- Buy options -->
+      <div class="max-md:w-[85%] flex flex-col gap-3 mb-8">
+        {% if product.is_available %}
+        <!-- In stock Button -->
+        <div class="max-md:w-full w-[80%]">
+          {% comment %}
+          <button hx-post="{% url 'add-to-cart-inline' product.slug %}" hx-trigger="click" hx-target="#cart-inline"
+            class="max-md:text-sm tracking-wider text-base uppercase border-black border-2 w-full py-3">
+            Add to cart
+          </button>
+          {% endcomment %}
+        </div>
+        <div class="max-md:w-full w-[80%]">
+          <button
+            class="max-md:text-sm tracking-wider text-base uppercase border-none text-white bg-[#e30505] w-full py-3">
+            Buy it now
+          </button>
+        </div>
+        {% else %}
+        <!-- Out of stock Button -->
+        <div class="max-md:w-full w-[80%]">
+          <button
+            class="max-md:text-sm cursor-not-allowed tracking-wider bg-gray-300 text-base uppercase border-gray-500 border-2 w-full py-3">
+            Out Of Stock
+          </button>
+        </div>
+        {% endif %}
+      </div>
+      <!-- Description and Notes -->
+      <div class="mb-8 max-w-[80%]">
+        <h2 class="uppercase text-3xl tracking-wider mb-6">Description:</h2>
+        <p class="">
+          {{ product.description|safe }}
+        </p>
+      </div>
+      {% if product.notes %}
+      <div class="mb-8 max-w-[80%]">
+        <h2 class="uppercase font-semibold text-3xl tracking-wider mb-6">Notes:</h2>
+        <p>
+          {{ product.notes|safe }}
+        </p>
+      </div>
+      {% endif %}
+      {% if product.performance %}
+      <div class="mb-8 max-w-[80%]">
+        <h2 class="uppercase font-semibold text-3xl tracking-wider mb-6">Performance:</h2>
+        <p>
+          {{ product.performance|safe }}
+        </p>
+      </div>
+      {% endif %}
+      <!-- FAQ button -->
+      <!-- Implement Later -->
+      <div class="max-md:w-[85%] flex flex-col max-md:justify-center max-md:items-center gap-3">
+        <div class="w-[80%] relative">
+          <button class="max-md:text-sm  border-2 border-gray-200 tracking-wider text-base uppercase w-full py-3">
+            Shipping Information
+          </button>
+          <div class="max-md:right-1 absolute top-[12%] right-4 max-w[20px]">
+            <img class="max-w-[35px]" src="{% static 'icons/down-arrow.png' %}" alt="">
+          </div>
+        </div>
+        <div class="w-[80%] relative">
+          <button class="max-md:text-sm  border-2 border-gray-200 tracking-wider text-base uppercase w-full py-3">
+            Ask a question
+          </button>
+          <div class="max-md:right-1 absolute top-[12%] right-4 max-w[20px]">
+            <img class="max-w-[35px]" src="{% static 'icons/down-arrow.png' %}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Show cart when product is added to shopping bag -->
+  <div id="cart-inline"></div>
+</main>
+{% endblock content %}

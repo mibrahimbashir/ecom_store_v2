@@ -61,7 +61,7 @@
       <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-2 gap-y-12 ">
         {% for product in collection.products.all %}
         <!-- Product Card -->
-        <a href="#">
+        <a href="{% url 'product_page' product.slug %}">
           <div class="flex flex-col justify-center items-center text-center">
             <!-- Product Image and Sale Tag (if applicable) -->
             <div class="relative mb-4 sm:mb-6 md:mb-8">

@@ -9,6 +9,7 @@ urlpatterns = [
     path('__reload__/', include('django_browser_reload.urls')),
     path('', include('django.contrib.auth.urls')),
     path('', include('storefront.urls')),
+    path('products/', include('products.urls')),
 ] + debug_toolbar_urls()
 
 if settings.DEBUG:
