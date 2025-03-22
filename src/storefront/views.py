@@ -1,10 +1,13 @@
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.db.models import Prefetch
+from django.views.decorators.http import require_http_methods
 from .forms import CustomerForm
 from products.models import Product, ProductImage, Collection
 
 
+@require_http_methods(['GET'])
 def home(request):
     product_images_prefetch = Prefetch(
         'images', # related_name of ProductImage in Product
@@ -33,6 +36,20 @@ def home(request):
     return render(request, 'storefront/home.html', context)
 
 
+@require_http_methods(['GET'])
+def get_header_content(request):
+    # not an AJAX request
+    if not request.headers.get('HX-Request'):
+        return HttpResponseForbidden()
+
+    all_collections = Collection.objects.only('name')
+
+    context = {'all_collections': all_collections}
+    
+    return render(request, 'storefront/header.html', context)
+
+
+@require_http_methods(['GET', 'POST'])
 def register(request):
     if request.user.is_authenticated:
         return redirect('home')

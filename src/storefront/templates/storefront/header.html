@@ -1,0 +1,118 @@
+{% load static %}
+<div
+  class="h-[120px] md:h-[150px] border-b-[1px] shadow-sm fixed top-0 left-0 right-0 z-[5000] bg-white uppercase tracking-widest">
+  <!-- Promo Banner -->
+  <div class="bg-[rgb(28,29,29)] text-xs sm:text-sm font-medium text-white text-center p-3">
+    <p>
+      14 days return policy | pasand na aaye to wapis
+    </p>
+  </div>
+
+  <!-- Navigation -->
+  <!-- larger screens -->
+  <div role="navigation" class="hidden md:block py-4">
+    <div class="flex items-center w-[90%] mx-auto text-base xl:text-lg tracking-widest">
+      <!-- Search Icon -->
+      {% comment %}
+      <div hx-trigger="click" hx-target="#search" hx-get="{% url 'search-modal' %}"
+        class="max-sm:w-[30px] max-md:w-[50px] max-lg:w-[70px] max-xl:w-[100px] lg:w-[130px] cursor-pointer">
+        <img class="max-md:w-6 max-lg:w-7 w-8 max-w-none" src="{% static 'icons/search.png' %}" alt="">
+      </div>
+      {% endcomment %}
+      <div>
+        <img class="w-7 lg:w-8 2xl:w-9 cursor-pointer" src="{% static 'icons/search.png' %}" alt="">
+      </div>
+
+      <!-- links -->
+      <div class="flex-1 flex items-center justify-center gap-12 mx-2">
+        <div>
+          <ul class="flex flex-col lg:flex-row gap-4 lg:gap-8 xl:gap-12 items-center justify-center text-center">
+            <li class="link-decoration">Home</li>
+            <li class="link-decoration relative group">
+              <input type="checkbox" id="collections" class="hidden peer">
+              <label for="collections" class="inline cursor-pointer">
+                All Collections
+                <img class="w-8 -mt-1 inline" src="{% static 'icons/down-arrow.png' %}" alt="">
+              </label>
+
+              <!-- dropdown menu for collections -->
+              <div
+                class="hidden peer-checked:block group-hover:block absolute bg-white w-full normal-case tracking-normal px-4 pb-0 pt-6 shadow-xl text-base">
+                <ul>
+                  {% for collection in all_collections %}
+                  <li class="pb-4 text-left">{{ collection.name }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- site logo -->
+        <div class="cursor-pointer w-[160px] xl:w-[180px]">
+          <img src="https://elyscents.pk/cdn/shop/files/logo_size.png?v=1703577106&width=320" alt="">
+        </div>
+
+        <div>
+          <ul class="flex flex-col lg:flex-row gap-4 lg:gap-8 xl:gap-12 items-center justify-center text-center">
+            <li class="link-decoration">About us</li>
+            <li class="link-decoration">Contact us</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- User and cart icons -->
+      <div class="flex items-center justify-center gap-4 lg:gap-8 xl:gap-12">
+        <!-- User Icon -->
+        <div>
+          {% if request.user.is_authenticated %}
+          <img class="w-5 lg:w-6 2xl:w-7 cursor-pointer" src="{% static 'icons/user.png' %}" alt="">
+          {% else %}
+          <a href="{% url 'login' %}">
+            <img class="w-5 lg:w-6 2xl:w-7 cursor-pointer" src="{% static 'icons/user.png' %}" alt="">
+          </a>
+          {% endif %}
+        </div>
+        <!-- Shopping bag icon -->
+        <div>
+          {% comment %}
+          <a hx-get="{% url 'cart-view'  %}" hx-trigger="click" hx-target="#cart-inline">
+            <img class="w-6 lg:w-7 2xl:w-8 cursor-pointer" src="{% static 'icons/shopping-bag.png' %}" alt="">
+          </a>
+          {% endcomment %}
+          <img class="w-6 lg:w-7 2xl:w-8 cursor-pointer" src="{% static 'icons/shopping-bag.png' %}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- navigation -->
+  <!-- smaller screens -->
+  <div class="block md:hidden pt-2">
+    <div class="flex items-center w-[90%] gap-4 mx-auto">
+      <div class="cursor-pointer">
+        <img width="25px" src="{% static 'icons/menu.png' %}" alt="menu button.">
+      </div>
+      <!-- site logo -->
+      <div class="flex-1 flex items-center justify-center cursor-pointer">
+        <img class="w-[120px] sm:w-[140px]" src="{% static 'img/logo.png' %}" alt="">
+      </div>
+      <!-- search and shopping cart icons -->
+      <div class="flex gap-4">
+        {% comment %}
+        <div class="cursor-pointer" hx-get="{% url 'search-modal' %}" hx-trigger="click" hx-target="#search-modal">
+          <img width="25px" src="https://img.icons8.com/?size=256&id=132&format=png" alt="search." />
+        </div>
+        {% endcomment %}
+        <div class="cursor-pointer">
+          <img class="w-[25px] sm:w-[30px]" src="{% static 'icons/search.png' %}" alt="search." />
+        </div>
+        <div class="cursor-pointer relative">
+          <img class="w-[22px] sm:w-[25px]" src="{% static 'icons/shopping-bag.png' %}" alt="shopping cart." />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
