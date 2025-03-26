@@ -8,3 +8,16 @@ class Cart:
             cart = self.session['session_key'] = {}
 
         self.cart = cart
+
+    def add(self, product):
+        product_id = str(product.id)
+
+        if product_id in self.cart:
+            print('product already in cart')
+
+        else:    
+            self.cart[product_id] = {'price': str(product.price)}
+            print('Adding product')
+
+        self.session.modified = True
+        print(f'self.cart {self.cart}')

@@ -26,7 +26,8 @@ def home(request):
                 queryset=Product.objects.only(
                     'name',
                     'price',
-                    'discount_percentage'
+                    'discount_percentage',
+                    'slug'
                 ).prefetch_related(product_images_prefetch)
             )
         ).filter(display_on_home=True)

@@ -10,6 +10,7 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('', include('storefront.urls')),
     path('products/', include('products.urls')),
+    path('cart/', include('cart.urls')),
 ] + debug_toolbar_urls()
 
 if settings.DEBUG:
