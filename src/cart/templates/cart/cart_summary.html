@@ -1,0 +1,66 @@
+{% extends 'storefront/base.html' %}
+
+{% load static humanize %}
+{% block headcontent %}
+<title>Cart Summary</title>
+{% endblock headcontent %}
+
+
+{% block content %}
+
+<main>
+  <div class="mt-16 md:px-16 px-4 flex flex-col">
+    <div class="flex flex-col items-center">
+      <h1 class="text-4xl mb-4 tracking-widest">Cart</h1>
+      <a class="link-decoration" href="{% url 'home' %}">
+        <p>Continue Shopping</p>
+      </a>
+    </div>
+
+    <div class="mt-16 gap-8 grid grid-cols-1 md:grid-cols-[1fr_0.5fr]">
+      <div>
+        {% for product in products %}
+        <div class="flex gap-2 md:gap-4 mb-8 pb-4 border-b-[1px]">
+          <!-- Image -->
+          {% for product_image in product.images.all %}
+          {% if forloop.first %}
+          <div>
+            <img class="w-[100px] h-auto" src="{{ product_image.image.url }}" alt="">
+          </div>
+          {% endif %}
+          {% endfor %}
+          <!-- Name and selected quantity -->
+          <div class="flex-1 flex flex-col">
+            <div class="text-base md:text-lg mb-4 max-w-[80%]">
+              {{ product.name|truncatechars:40 }}
+            </div>
+            <!-- Implement functionality to update and delete product -->
+          </div>
+          <!-- Price -->
+          {% if product.on_sale %}
+          <div class="max-md:text-base text-lg self-end">
+            Rs. {{ product.discounted_price|intcomma }}
+          </div>
+          {% else %}
+          <div class="max-md:text-base self-end">
+            Rs. {{ product.price|intcomma }}
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="bg-gray-100 p-8 max-h-max mb-8">
+        <div class="flex justify-between gap-4 font-semibold tracking-wide">
+          <p>Subtotal</p>
+          <p>Rs: {20000}</p>
+        </div>
+        <div>
+          <button class="bg-black text-white w-full py-3 tracking-widest font-semibold mt-8 mb-4">Check out</button>
+        </div>
+        <p class="text-center text-sm tracking-wide">Shipping, taxes, and discount codes calculated at checkout.</p>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock content %}

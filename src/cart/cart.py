@@ -21,3 +21,6 @@ class Cart:
 
         self.session.modified = True
         print(f'self.cart {self.cart}')
+
+    def get_prod_ids(self):
+        return self.cart.keys()

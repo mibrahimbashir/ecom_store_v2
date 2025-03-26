@@ -1,0 +1,97 @@
+{% load static humanize %}
+<div id="cart-inline-inner" class="transition-opacity opacity-100 duration-300">
+  <!-- Overlay -->
+  <div hx-on:click="this.closest('#cart-inline-inner').remove()"
+    class="fixed top-0 bottom-0 left-0 right-[30%] bg-gray-300 bg-opacity-50 z-[8000] shadow-2xl">
+  </div>
+
+  <!-- Cart -->
+  <div
+    class="flex flex-col bg-white border-l-[1px] pt-4 pl-6 border-l-black fixed top-0 h-screen max-md:left-[40%] max-lg:left-[50%] max-xl:left-[60%] xl:left-[65%] right-0 left-[70%] z-[8000]">
+    <!-- Header -->
+    <div class="flex justify-between items-center pb-6 border-b-[1px]">
+      <h2 class="uppercase text-3xl tracking-widest">Cart</h2>
+      <!-- Close button -->
+      <button hx-on:click="this.closest('#cart-inline-inner').remove()" class="pr-4">
+        <img class="w-[20px]" src="{% static 'icons/close.png' %}" alt="">
+      </button>
+    </div>
+
+
+    {% if messages %}
+    {% for message in messages %}
+    <div id="message" class="w-[90%] px-4 py-4 text-base bg-red-500 mt-8 mx-auto text-white rounded-xl">
+      {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <!-- Cart products -->
+    <div class="mt-14 flex-1 overflow-y-auto">
+      {% for product in products %}
+      <!-- Product Container -->
+      <div class="flex justify-between gap-4 mb-12 pb-4 border-b-[1px] pr-4">
+        <!-- Image -->
+        {% for product_image in product.images.all %}
+        {% if forloop.first %}
+        <div class="w-[120px]">
+          <img class="w-full h-auto" src="{{ product_image.image.url }}" alt="">
+        </div>
+        {% endif %}
+        {% endfor %}
+        <!-- Name and selected quantity -->
+        <div class="flex-1 flex flex-col justify-between">
+          <div class="max-md:text-base text-lg mb-4 max-w-[80%]">
+            {{ product.name|truncatechars:40 }}
+          </div>
+          <!-- Implement functionality to update and delete product -->
+          <div>
+            Quantity: {{ product.quantity }}
+          </div>
+        </div>
+        <!-- Price -->
+        {% if product.on_sale %}
+        <div class="max-md:text-base text-lg self-end">
+          Rs. {{ product.discounted_price|intcomma }}
+        </div>
+        {% else %}
+        <div class="max-md:text-base self-end">
+          Rs. {{ product.price|intcomma }}
+        </div>
+        {% endif %}
+      </div>
+      {% empty %}
+      <h1 class="text-2xl">No Products In Cart</h1>
+      {% endfor %}
+    </div>
+
+    {% comment %}
+    <!-- Subtotal -->
+    <div class="flex flex-col items-center p-4 pr-8 border-t-[1px]">
+      <div class="flex justify-between w-full">
+        <div class="max-md:text-base text-lg uppercase">Subtotal</div>
+        <div class="max-md:text-base text-lg">Rs. {{ subtotal|intcomma }}</div>
+      </div>
+      <div class="max-md:text-sm mt-2 text-center text-sm">
+        Shipping, taxes, and discount codes calculated at checkout.
+      </div>
+      <div class="w-full mt-4">
+        {% if all_cart_products %}
+        <!-- Checkout button; acitves -->
+        <a href="{% url 'store:checkout' %}">
+          <button class="max-md:text-base w-full bg-black text-white py-3 font-semibold">
+            Check out
+          </button>
+        </a>
+        {% else %}
+        <!-- No products -->
+        <!-- Disable checkout button -->
+        <button class="max-md:text-base w-full bg-gray-300 cursor-not-allowed text-black py-3 font-semibold">
+          Check out
+        </button>
+        {% endif %}
+      </div>
+    </div>
+    {% endcomment %}
+  </div>
+</div>

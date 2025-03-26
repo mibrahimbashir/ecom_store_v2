@@ -21,7 +21,9 @@
       <div class="flex-1 flex items-center justify-center gap-12 mx-2">
         <div>
           <ul class="flex flex-col lg:flex-row gap-4 lg:gap-8 xl:gap-12 items-center justify-center text-center">
-            <li class="link-decoration">Home</li>
+            <li class="link-decoration">
+              <a href="{% url 'home' %}">Home</a>
+            </li>
             <li class="link-decoration relative group">
               <input type="checkbox" id="collections" class="hidden peer">
               <label for="collections" class="inline cursor-pointer">
@@ -44,7 +46,9 @@
 
         <!-- site logo -->
         <div class="cursor-pointer w-[160px] xl:w-[180px]">
-          <img src="https://elyscents.pk/cdn/shop/files/logo_size.png?v=1703577106&width=320" alt="">
+          <a href="{% url 'home' %}">
+            <img src="https://elyscents.pk/cdn/shop/files/logo_size.png?v=1703577106&width=320" alt="">
+          </a>
         </div>
 
         <div>
@@ -70,12 +74,9 @@
         </div>
         <!-- Shopping bag icon -->
         <div>
-          {% comment %}
-          <a hx-get="{% url 'cart-view'  %}" hx-trigger="click" hx-target="#cart-inline">
+          <a href="{% url 'cart-summary'  %}">
             <img class="w-6 lg:w-7 2xl:w-8 cursor-pointer" src="{% static 'icons/shopping-bag.png' %}" alt="">
           </a>
-          {% endcomment %}
-          <img class="w-6 lg:w-7 2xl:w-8 cursor-pointer" src="{% static 'icons/shopping-bag.png' %}" alt="">
         </div>
       </div>
     </div>
@@ -92,7 +93,9 @@
       </div>
       <!-- site logo -->
       <div class="flex-1 flex items-center justify-center cursor-pointer">
-        <img class="w-[120px] sm:w-[140px]" src="{% static 'img/logo.png' %}" alt="">
+        <a href="{% url 'home' %}">
+          <img class="w-[120px] sm:w-[140px]" src="{% static 'img/logo.png' %}" alt="">
+        </a>
       </div>
       <!-- search and shopping cart icons -->
       <div class="flex gap-4">
@@ -101,7 +104,9 @@
           <img class="w-[25px] sm:w-[30px]" src="{% static 'icons/search.png' %}" alt="search." />
         </div>
         <div class="cursor-pointer relative">
-          <img class="w-[22px] sm:w-[25px]" src="{% static 'icons/shopping-bag.png' %}" alt="shopping cart." />
+          <a href="{% url 'cart-summary' %}">
+            <img class="w-[22px] sm:w-[25px]" src="{% static 'icons/shopping-bag.png' %}" alt="shopping cart." />
+          </a>
         </div>
       </div>
     </div>

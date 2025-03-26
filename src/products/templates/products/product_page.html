@@ -81,7 +81,7 @@
         {% if product.is_available %}
         <!-- In stock Button -->
         <div class="max-md:w-full w-[80%]">
-          <button hx-post="{% url 'cart-add' product.slug %}" hx-trigger="click"
+          <button hx-post="{% url 'cart-add' product.slug %}" hx-trigger="click" hx-target="#cart-inline"
             class="max-md:text-sm tracking-wider text-base uppercase border-black border-2 w-full py-3">
             Add to cart
           </button>
