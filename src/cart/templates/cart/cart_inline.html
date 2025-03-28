@@ -28,7 +28,7 @@
 
     <!-- Cart products -->
     <div class="mt-14 flex-1 overflow-y-auto">
-      {% for product in products %}
+      {% for product, product_qty in products_data %}
       <!-- Product Container -->
       <div class="flex justify-between gap-4 mb-12 pb-4 border-b-[1px] pr-4">
         <!-- Image -->
@@ -45,8 +45,28 @@
             {{ product.name|truncatechars:40 }}
           </div>
           <!-- Implement functionality to update and delete product -->
-          <div>
-            Quantity: {{ product.quantity }}
+          <!-- Implement functionality to update and delete product -->
+          <div class="flex items-center border border-gray-300 rounded-md w-fit">
+            <!-- Minus Button -->
+            <button type="button" class="pl-3 py-1 text-gray-700 font-bold text-xl"
+              onclick="document.getElementById('quantity-selector-{{ product.slug }}').stepDown();"
+              hx-post="{% url 'update_quantity' product.slug %}" hx-trigger="click"
+              hx-include="#quantity-selector-{{ product.slug }}">
+              &minus;
+            </button>
+
+            <!-- Quantity Input -->
+            <input type="number" id="quantity-selector-{{ product.slug }}" name="quantity" value="{{ product_qty }}"
+              class="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none w-14 text-center border-0 px-2 focus:ring-0"
+              hx-post="{% url 'update_quantity' product.slug %}" hx-trigger="change" />
+
+            <!-- Plus Button -->
+            <button type="button" class="pr-3 py-1 text-gray-700 font-bold text-xl"
+              onclick="document.getElementById('quantity-selector-{{ product.slug }}').stepUp();"
+              hx-post="{% url 'update_quantity' product.slug %}" hx-trigger="click"
+              hx-include="#quantity-selector-{{ product.slug }}">
+              +
+            </button>
           </div>
         </div>
         <!-- Price -->
@@ -65,7 +85,6 @@
       {% endfor %}
     </div>
 
-    {% comment %}
     <!-- Subtotal -->
     <div class="flex flex-col items-center p-4 pr-8 border-t-[1px]">
       <div class="flex justify-between w-full">
@@ -75,6 +94,7 @@
       <div class="max-md:text-sm mt-2 text-center text-sm">
         Shipping, taxes, and discount codes calculated at checkout.
       </div>
+      {% comment %}
       <div class="w-full mt-4">
         {% if all_cart_products %}
         <!-- Checkout button; acitves -->
@@ -91,7 +111,7 @@
         </button>
         {% endif %}
       </div>
+      {% endcomment %}
     </div>
-    {% endcomment %}
   </div>
 </div>
