@@ -20,8 +20,9 @@
 
     {% if messages %}
     {% for message in messages %}
-    <div id="message" class="w-[90%] px-4 py-4 text-base bg-red-500 mt-8 mx-auto text-white rounded-xl">
-      {{message}}
+    <div id="message"
+      class="w-[90%] px-4 py-4 text-base bg-gradient-to-r from-blue-200 to-blue-300 mt-8 mx-auto text-white rounded-xl">
+      <p class="text-blue-900">{{message}}</p>
     </div>
     {% endfor %}
     {% endif %}

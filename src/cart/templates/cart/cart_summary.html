@@ -10,13 +10,19 @@
 
 <main>
   <div class="mt-16 md:px-16 px-4 flex flex-col">
-    <div class="flex flex-col items-center">
-      <h1 class="text-4xl mb-4 tracking-widest">Cart</h1>
+
+    <div class="flex flex-col gap-4 items-center">
+      <h1 class="text-4xl tracking-widest">Cart</h1>
+      {% if not products_data %}
+      <p>Your cart is currently empty.</p>
+      {% endif %}
       <a class="link-decoration" href="{% url 'home' %}">
         <p>Continue Shopping</p>
       </a>
     </div>
 
+
+    {% if products_data %}
     <div class="mt-16 gap-8 grid grid-cols-1 md:grid-cols-[1fr_0.5fr]">
       <div>
         {% for product, product_qty in products_data %}
@@ -84,6 +90,7 @@
         <p class="text-center text-sm tracking-wide">Shipping, taxes, and discount codes calculated at checkout.</p>
       </div>
     </div>
+    {% endif %}
   </div>
 </main>
 {% endblock content %}
