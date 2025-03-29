@@ -25,7 +25,7 @@ class Cart:
     def _validate_quantity(self, product, quantity_to_add=1):
         if not isinstance(product, Product):
             return False, 'Invalid request. Please try again.'
-        elif not isinstance(quantity_to_add, int) or quantity_to_add < 1:
+        elif not isinstance(quantity_to_add, int) or quantity_to_add < 0:
             return False, 'Invalid quantity selected.'
 
         product_id = str(product.id)
@@ -64,6 +64,26 @@ class Cart:
                     self.cart[product_id][attr] = str(value)
                 elif dtype == 'bool':
                     self.cart[product_id][attr] = bool(value)
+
+    def update_quantity(self, product, new_quantity):
+        product_id = str(product.id)
+        
+        if product_id not in self.cart:
+            return False, f'An error occured while updating quantity for product {product}. Please make sure that you have already added the product in cart'
+
+        valid_to_add, msg = self._validate_quantity(product, quantity_to_add=new_quantity)
+
+        if not valid_to_add:
+            return False, msg
+        
+        if new_quantity == 0:
+            del self.cart[product_id]
+            msg = 'Product Deleted'
+        else:
+            self.cart[product_id]['quantity'] = new_quantity
+            msg = 'Quantity updated'
+        self.session.modified = True
+        return True, msg
 
     def add(self, product):
         # no need for extra check for product's dtype
