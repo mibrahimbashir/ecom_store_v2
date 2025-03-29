@@ -22,7 +22,7 @@ class Cart:
     def __len__(self):
         return len(self.cart.keys())
 
-    def _validate_quantity(self, product, quantity_to_add=1):
+    def _validate_quantity(self, product, quantity_to_add=1, update=True):
         if not isinstance(product, Product):
             return False, 'Invalid request. Please try again.'
         elif not isinstance(quantity_to_add, int) or quantity_to_add < 0:
@@ -33,7 +33,7 @@ class Cart:
 
         quantity_in_cart = self.cart.get(product_id, {}).get('quantity', 0)
 
-        new_quantity = quantity_in_cart + quantity_to_add
+        new_quantity = quantity_in_cart + quantity_to_add if not update else quantity_to_add
 
         if new_quantity > available_stock:
             return False, 'No more items available.'
@@ -88,7 +88,7 @@ class Cart:
     def add(self, product):
         # no need for extra check for product's dtype
         # _validate_quantity simultaneously checks the dtype
-        valid_to_add, message = self._validate_quantity(product)
+        valid_to_add, message = self._validate_quantity(product, update=False)
 
         if not valid_to_add:
             return False, message
