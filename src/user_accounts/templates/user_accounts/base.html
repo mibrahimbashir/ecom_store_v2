@@ -1,0 +1,29 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- script tag for htmx -->
+  <script src="https://unpkg.com/htmx.org@2.0.4"
+    integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous">
+    </script>
+  {% tailwind_css %}
+
+  {% block head_content %}
+  {% endblock head_content %}
+</head>
+
+<body class="pb-[1000px]  bg-[rgb(245,245,245)]" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  {% include "user_accounts/header.html" %}
+
+  <div class="px-8">
+    {% block content %}
+    {% endblock content %}
+  </div>
+
+</body>
+
+</html>

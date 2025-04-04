@@ -1,0 +1,10 @@
+{% extends "user_accounts/base.html" %}
+
+{% block head_content %}
+<title>Profile</title>
+{% endblock head_content %}
+
+{% block content %}
+<h1 class="text-4xl text-center">Profile Page</h1>
+<h2 class="text-2xl text-center">{{request.user.username}} | {{request.user.email}}</h2>
+{% endblock content %}

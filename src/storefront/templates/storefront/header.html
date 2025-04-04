@@ -65,7 +65,9 @@
         <!-- User Icon -->
         <div>
           {% if request.user.is_authenticated %}
-          <img class="w-5 lg:w-6 2xl:w-7 cursor-pointer" src="{% static 'icons/user.png' %}" alt="">
+          <a href="{% url 'profile' %}">
+            <img class="w-5 lg:w-6 2xl:w-7 cursor-pointer" src="{% static 'icons/user.png' %}" alt="">
+          </a>
           {% else %}
           <a href="{% url 'login' %}">
             <img class="w-5 lg:w-6 2xl:w-7 cursor-pointer" src="{% static 'icons/user.png' %}" alt="">

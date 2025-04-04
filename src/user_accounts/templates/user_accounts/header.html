@@ -1,0 +1,40 @@
+{% load static %}
+<header class="w-full h-[80px] bg-white sticky top-0 left-0 right-0">
+  <!-- Larger Screens -->
+  <div class="max-md:hidden xl:w-[80%] h-full my-0 mx-auto px-8 flex justify-between items-center">
+    <div class="flex items-center gap-8">
+      <h1 class="text-xl">ElyScents</h1>
+      <a href="">
+        Shop
+      </a>
+      <a href="">
+        Orders
+      </a>
+    </div>
+    <div class="flex items-center">
+      {% if user_initials %}
+      <div class="text-lg bg-gray-100 text-black px-3 py-1 rounded-full">
+        {{ user_initials }}
+      </div>
+      {% else %}
+      <div>
+        <img src="{% static 'icons/user.png' %}" class="w-6 h-6" alt="">
+      </div>
+      {% endif %}
+      <div>
+        <img src="{% static 'icons/down-arrow.png' %}" class="w-8 h-8" alt="">
+      </div>
+    </div>
+  </div>
+  <!-- Smaller Screens -->
+  <div class="md:hidden h-full flex items-center px-6">
+    <div>
+      <img src="{% static 'icons/menu.png' %}" class="w-7" alt="">
+    </div>
+    <div class="flex justify-center flex-1">
+      <a href="" class="text-xl">
+        ElyScents
+      </a>
+    </div>
+  </div>
+</header>

@@ -11,6 +11,7 @@ urlpatterns = [
     path('', include('storefront.urls')),
     path('products/', include('products.urls')),
     path('cart/', include('cart.urls')),
+    path('user_account/', include('user_accounts.urls')),
 ] + debug_toolbar_urls()
 
 if settings.DEBUG:
