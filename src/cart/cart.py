@@ -56,13 +56,13 @@ class Cart:
             for attr in attrs:
                 if ignore_attrs is not None and attr in ignore_attrs:
                     continue
-                
+
                 value = getattr(product, attr)
 
                 if dtype == 'int':
                     self.cart[product_id][attr] = int(value)
                 elif dtype == 'float':
-                    self.cart[product_id][attr] = float(value)
+                    self.cart[product_id][attr] = float(value) if value else 0
                 elif dtype == 'str':
                     self.cart[product_id][attr] = str(value)
                 elif dtype == 'bool':
@@ -88,6 +88,26 @@ class Cart:
         self.session.modified = True
         return True, msg
 
+    def update_user_cart(self):
+        if self.request.user.is_authenticated:
+            current_user = UserProfile.objects.filter(id=self.request.user.id)
+            old_cart = str(self.cart)
+            old_cart = old_cart.replace('\'', '\"')
+            old_cart = old_cart.replace('True', 'true')
+            old_cart = old_cart.replace('False', 'false')
+            current_user.update(cart=old_cart)
+
+    def db_add(self, product, quantity):
+        product_id = str(product.id)
+
+        if product_id not in self.cart:
+            self.cart[product_id] = {}
+
+        self.cart[product_id]['quantity'] = quantity
+        self._set_attrs(product)
+
+        self.session.modified = True
+
     def add(self, product):
         # no need for extra check for product's dtype
         # _validate_quantity simultaneously checks the dtype
@@ -105,12 +125,6 @@ class Cart:
         self._set_attrs(product)
 
         self.session.modified = True
-
-        if self.request.user.is_authenticated:
-            current_user = UserProfile.objects.filter(id=self.request.user.id)
-            old_cart = str(self.cart)
-            old_cart = old_cart.replace('\'', '\"')
-            current_user.update(cart=old_cart)
 
         return True, 'Product has been added to the cart.'
 

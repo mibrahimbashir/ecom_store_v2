@@ -29,6 +29,8 @@ def cart_add(request, slug):
     product = get_object_or_404(Product, slug=slug)
 
     success, msg = cart.add(product)
+    if success:
+        cart.update_user_cart()
 
     cart_product_ids = cart.get_product_ids()
 
@@ -66,17 +68,18 @@ def update_quantity(request, slug):
         except:
             context = render_cart_with_message('Invalid request. Enter a valid quantity for product')
             return render(request, template, context)
-            
-        
+
         if new_quantity < 0:
             context = render_cart_with_message('Invalid quantity selected.')
             return render(request, template, context)
 
-        _, msg = cart.update_quantity(product, new_quantity)
+        success, msg = cart.update_quantity(product, new_quantity)
+        if success:
+            cart.update_user_cart()
 
         if cart.__len__() == 0:
             return render(request, template, {})
-        
+
         context = render_cart_with_message(msg)
-        
+
         return render(request, template, context)
