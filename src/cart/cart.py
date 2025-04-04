@@ -1,4 +1,6 @@
 from products.models import Product
+from storefront.models import UserProfile
+
 
 class Cart:
     MAX_ALLOWED_QUANTITY = 20
@@ -11,6 +13,7 @@ class Cart:
 
     def __init__(self, request):
         self.session = request.session
+        self.request = request
 
         cart = self.session.get('cart')
 
@@ -102,6 +105,13 @@ class Cart:
         self._set_attrs(product)
 
         self.session.modified = True
+
+        if self.request.user.is_authenticated:
+            current_user = UserProfile.objects.filter(id=self.request.user.id)
+            old_cart = str(self.cart)
+            old_cart = old_cart.replace('\'', '\"')
+            current_user.update(cart=old_cart)
+
         return True, 'Product has been added to the cart.'
 
     def calculate_subtotal(self):

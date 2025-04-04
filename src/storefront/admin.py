@@ -10,6 +10,7 @@ class UserProfileAdmin(UserAdmin):
     list_display = ['email', 'username', 'phone_number', 'date_joined']
     fieldsets = [
         ('Email & Username', {'fields': ['email', 'username']}),
+        ('Cart', {'fields': ['cart']}),
         ('Personal Info', {'fields': ['first_name', 'last_name', 'phone_number']}),
         ('Shipping Info', {'fields': ['address', ('city', 'state'), 'postal_code']}),
     ]

@@ -11,6 +11,7 @@ class UserProfile(AbstractUser):
     state = models.CharField(max_length=32, blank=True, null=True)
     postal_code = models.CharField(max_length=16, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='user_profile_pics/', blank=True, null=True)
+    cart = models.TextField(null=True, blank=True)
 
     USERNAME_FIELD = 'email'
 
