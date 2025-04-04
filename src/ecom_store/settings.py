@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'storefront',
     'products',
     'cart',
+    'user_accounts',
     'django_cleanup.apps.CleanupConfig', # recommended to place it last
 ]
 
