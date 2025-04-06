@@ -12,3 +12,7 @@ def user_profile(request):
 
     context =  {'user_initials': user_initials}
     return render(request, 'user_accounts/user_profile.html', context)
+
+
+def user_info_form(request):
+    return render(request, 'user_accounts/user_info_form.html', {})

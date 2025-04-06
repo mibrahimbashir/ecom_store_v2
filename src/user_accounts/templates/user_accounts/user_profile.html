@@ -1,10 +1,80 @@
 {% extends "user_accounts/base.html" %}
 
+{% load static %}
+
 {% block head_content %}
 <title>Profile</title>
 {% endblock head_content %}
 
 {% block content %}
-<h1 class="text-4xl text-center">Profile Page</h1>
-<h2 class="text-2xl text-center">{{request.user.username}} | {{request.user.email}}</h2>
+<div class="xl:max-w-[80%] mx-auto my-0 py-8 flex flex-col gap-8">
+  <h1 class="text-2xl font-semibold">Profile</h1>
+
+  <div class="flex flex-col gap-4 bg-white p-8 rounded-lg text-sm">
+    <p>
+      {% if user_initials %}
+      <span class="font-semibold">
+        {{request.user.first_name}} {{request.user.last_name}}
+        <img src="{% static 'icons/pencil.png' %}" alt="" class="w-[.8rem] inline-block ml-5 cursor-pointer"
+          hx-get="{% url 'user_info_form' %}" hx-trigger="click" hx-swap="innerHTML transition:true" hx-target="#form">
+      </span>
+      {% else %}
+      <span class="text-gray-600">
+        Name
+        <img src="{% static 'icons/pencil.png' %}" alt="" class="w-[.8rem] inline-block ml-5 cursor-pointer"
+          hx-get="{% url 'user_info_form' %}" hx-trigger="click" hx-swap="innerHTML transition:true" hx-target="#form">
+      </span>
+      {% endif %}
+    </p>
+    <p>
+      <span class="text-gray-500">Email</span><br>
+      <span>{{request.user.email}}</span>
+    </p>
+  </div>
+
+  <div class="flex flex-col gap-4 bg-white p-8 rounded-lg text-sm">
+    <p class="font-semibold pl-2">Shipping Address</p>
+    <div class="hover:bg-gray-100 hover:cursor-pointer rounded-md p-2 max-w-[300px]">
+      <div class="flex justify-between items-center mb-4">
+        <p class="text-gray-500">Default Address</p>
+        <img src="{% static 'icons/pencil.png' %}" alt="" class="w-[.8rem] inline-block ml-5 cursor-pointer">
+      </div>
+      <div>
+        <p>
+          {% if request.user.first_name %}
+          {{request.user.first_name}}
+          {% endif %}
+          {% if request.user.last_name %}
+          {{request.user.last_name}}
+          {% endif %}
+        </p>
+        <p>
+          {% if request.user.address %}
+          {{request.user.address}}
+          {% endif %}
+        </p>
+        <p>
+          {% if request.user.city %}
+          {{request.user.city}}
+          {% endif %}
+          {% if request.user.postal_code %}
+          {{request.user.postal_code}}
+          {% endif %}
+        </p>
+        <p>
+          {% if request.user.state %}
+          {{request.user.state}}
+          {% endif %}
+        </p>
+        <p>
+          {% if request.user.phone_number %}
+          {{request.user.phone_number}}
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="form"></div>
 {% endblock content %}
