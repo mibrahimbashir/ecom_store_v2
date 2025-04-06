@@ -7,6 +7,16 @@
 {% endblock head_content %}
 
 {% block content %}
+
+{% if messages %}
+{% for message in messages %}
+<div id="message"
+  class="w-[90%] px-4 py-4 text-base bg-gradient-to-r from-blue-200 to-blue-300 mt-8 mx-auto text-white rounded-xl">
+  <p class="text-blue-900">{{message}}</p>
+</div>
+{% endfor %}
+{% endif %}
+
 <div class="xl:max-w-[80%] mx-auto my-0 py-8 flex flex-col gap-8">
   <h1 class="text-2xl font-semibold">Profile</h1>
 

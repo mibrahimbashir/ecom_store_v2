@@ -3,8 +3,7 @@
   <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-xl relative">
 
     <h2 class="text-xl font-semibold mb-4">Edit profile</h2>
-
-    <form method="POST" class="space-y-4">
+    <form method="POST" action="{% url 'update_user_info' %}" hx-target="#form" hx-swap="innerHTML" class="space-y-4">
       {% csrf_token %}
 
       <!-- Name fields -->
